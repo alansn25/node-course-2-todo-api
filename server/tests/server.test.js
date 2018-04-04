@@ -150,7 +150,6 @@ describe('PATCH /todos/:id', () =>{
         var hexId = todos[0]._id.toHexString();
         var text = "I love rock and roll";
             
-
         request(app)
         .patch(`/todos/${hexId}`)
         .send({
