@@ -8,6 +8,7 @@ const {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
+var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
 const port=process.env.PORT;
@@ -110,6 +111,19 @@ app.post('/users', (req, res)=>{
     });
 });
 
+
+
+app.get('/users/me', authenticate, (req, res) => {
+    // var token = req.header('x-auth');
+
+    // User.findByToken(token).then((user) => {
+    //     if(!user){
+    //         return Promise.reject(); // the function is going to stop and it will enter the catch and it will hadle the erro there
+    //     }
+    // it is not necessary with the authenticate middleware
+
+        res.send(req.user);    
+});
 
 app.listen(port, ()=>{
     console.log(`Started up at port ${port}`);
