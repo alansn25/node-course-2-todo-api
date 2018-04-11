@@ -113,7 +113,7 @@ app.post('/users', (req, res)=>{
 
 
 
-app.get('/users/me', authenticate, (req, res) => {
+app.get('/users/me', authenticate, (req, res) => {// private route
     // var token = req.header('x-auth');
 
     // User.findByToken(token).then((user) => {
@@ -140,6 +140,13 @@ app.post('/users/login', (req, res) => {
     });  
 });
 
+app.delete('/users/me/token', authenticate, (req, res) => {//private route, you have to be authenticated to access this route
+    req.user.removeToken(req.token).then(() => {
+        res.status(200).send();
+    }, () => {
+        res.status(400).send();
+    });
+});
 
 
 app.listen(port, ()=>{
